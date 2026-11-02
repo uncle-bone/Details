@@ -91,6 +91,10 @@ function petContainer.Reset()
 	table.wipe(petContainer.Pets)
 	table.wipe(petContainer.UnitPetCache)
 	table.wipe(petContainer.IgnoredActors)
+	-- Retry timestamps belong to the same encounter-local GUID cache.
+	if (petContainer.OwnerRetryAt) then
+		table.wipe(petContainer.OwnerRetryAt)
+	end
 end
 
 function Details.DebugPets()
@@ -218,6 +222,9 @@ function petContainer.AddPet(petGuid, petName, petFlags, ownerGuid, ownerName, o
 
 	petContainer.Pets[petGuid] = petData
     petContainer.IgnoredActors[petGuid] = nil
+	if (petContainer.OwnerRetryAt) then
+		petContainer.OwnerRetryAt[petGuid] = nil
+	end
 	Details222.Profiling.ProfileStop("petContainer.AddPet")
 	return petData
 end
