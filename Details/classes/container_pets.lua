@@ -338,6 +338,11 @@ function petContainer.GetOwner(petGuid, petName)
 			end
 		end
 	end
+	-- Throttle unresolved custom pet lookups without permanently discarding them.
+	if (petContainer.OwnerRetryAt and petContainer.OwnerRetryAt[petGuid] and GetTime() < petContainer.OwnerRetryAt[petGuid]) then
+		Details222.Profiling.ProfileStop("petContainer.GetOwner")
+		return
+	end
 	--check if this pet is being ignored
 	if (petContainer.IgnoredActors[petGuid]) then
 		Details222.Profiling.ProfileStop("petContainer.GetOwner")
@@ -386,8 +391,12 @@ function petContainer.GetOwner(petGuid, petName)
 		return petData.hashName, petData.ownerName, petData.ownerGuid, petData.ownerFlags
 	end
 
-	--couldn't find the pet owner, ignore this pet
-	petContainer.IgnorePet(petGuid)
+	-- CoA: custom summons (including Mechanics guardians) can deal damage before
+	-- their ownership event arrives. Do not permanently blacklist an unresolved
+	-- pet: later summon/unit events may establish the correct owner.
+	-- A short retry interval avoids repeating tooltip scans on every damage tick.
+	petContainer.OwnerRetryAt = petContainer.OwnerRetryAt or {}
+	petContainer.OwnerRetryAt[petGuid] = GetTime() + 3
 	Details222.Profiling.ProfileStop("petContainer.GetOwner")
 	return nil
 end
