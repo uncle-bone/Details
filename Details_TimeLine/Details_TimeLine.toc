@@ -1,5 +1,5 @@
 ## Interface: 30300
-## Version: CoA-1.1.8-test
+## Version: CoA-1.1.9-test
 ## Title: Details!: Time Line (plugin)
 ## Notes: Show debuff, cooldown, enemy casts and enemy debuffs on a clear timeline.
 ## DefaultState: disabled
