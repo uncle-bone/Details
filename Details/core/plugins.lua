@@ -752,12 +752,15 @@
 		end
 
 		function pluginContainerFrame.RefreshFrame(frame, parent)
+			-- CoA: guard plugins whose display frame has not been initialized.
+			if (not frame or type(frame.EnableMouse) ~= "function") then return false end
 			frame:EnableMouse(false)
 			frame:SetSize(pluginContainerFrame.FrameWidth, pluginContainerFrame.FrameHeight)
 			frame:ClearAllPoints()
 			PixelUtil.SetPoint(frame, "topleft", parent or pluginContainerFrame, "topleft", 0, 0)
 			frame:SetParent(parent or pluginContainerFrame)
 			frame:Show()
+			return true
 		end
 
 		---a plugin has request to be embed into the main plugin window
@@ -767,8 +770,8 @@
 		---@param callback function a callback to run when the plugin is clicked
 		function pluginContainerFrame.EmbedPlugin(pluginObject, frame, bIsUtility, callback)
 			--check if the plugin has a frame
-			if (not pluginObject.Frame) then
-				pluginContainerFrame.DebugMsg("plugin doesn't have a frame.")
+			if (not frame or type(frame.EnableMouse) ~= "function" or not pluginObject.Frame) then
+				pluginContainerFrame.DebugMsg("plugin doesn't have a valid frame.")
 				return
 			end
 
