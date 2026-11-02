@@ -1834,15 +1834,28 @@
 			petName = newPetName
 		end
 
-		--pet summon another pet
-		local petTable = petCache[sourceSerial]
-		if (petTable) then
-			sourceName, sourceSerial, sourceFlags = petTable[1], petTable[2], petTable[3]
+		-- CoA-Research v2.0.1 integration: use observed SPELL_SUMMON ownership,
+		-- not archived spell-to-NPC candidate mappings. Resolve nested summons
+		-- through the already verified owner cache, with cycle/depth protection.
+		local visitedOwners = {}
+		for depth = 1, 8 do
+			local petTable = sourceSerial and petCache[sourceSerial]
+			if (not petTable or visitedOwners[sourceSerial]) then
+				break
+			end
+			visitedOwners[sourceSerial] = true
+			local nextSerial = petTable[2]
+			if (not nextSerial or nextSerial == sourceSerial) then
+				break
+			end
+			sourceName, sourceSerial, sourceFlags = petTable[1], nextSerial, petTable[3]
 		end
-
-		petTable = petCache[petSerial]
-		if (petTable) then
-			sourceName, sourceSerial, sourceFlags = petTable[1], petTable[2], petTable[3]
+		-- Preserve known owner identity on duplicate summon events. The
+		-- summoned creature's own cache must never replace its real owner.
+		local existingPetOwner = petCache[petSerial]
+		if (existingPetOwner and existingPetOwner[2] and
+			(existingPetOwner[2] == sourceSerial or not sourceSerial or sourceSerial == petSerial)) then
+			sourceName, sourceSerial, sourceFlags = existingPetOwner[1], existingPetOwner[2], existingPetOwner[3]
 		end
 
         -- CoA: combat-log summons may omit a display name on custom creatures.
