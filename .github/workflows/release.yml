@@ -48,6 +48,12 @@ jobs:
           args=()
           if [ "$PRERELEASE" = true ]; then args+=(--prerelease --latest=false); else args+=(--latest); fi
           if gh release view "$VERSION" >/dev/null 2>&1; then
+            # Promote an existing prerelease without replacing its verified ZIP.
+            if [ "$PRERELEASE" = false ] && [ "$(gh release view "$VERSION" --json isPrerelease --jq '.isPrerelease')" = true ]; then
+              gh release edit "$VERSION" --prerelease=false --latest
+              echo "Promoted $VERSION to latest stable"
+              exit 0
+            fi
             echo "::error::Release already exists; refusing to overwrite it"
             exit 1
           fi
