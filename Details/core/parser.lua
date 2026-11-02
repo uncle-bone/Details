@@ -660,7 +660,11 @@
 			-- Pet-only pulls must create the segment on the FIRST damaging event,
 			-- including a periodic tick. Never start from arbitrary nearby NPCs.
 			local coaOwnedPetPull = false
-			if (sourceSerial and sourceFlags and bitBand(sourceFlags, OBJECT_TYPE_PETS) ~= 0
+			-- Mechanics deployables can be guardians (not just TYPE_PET).
+			-- Require explicit local ownership or a cached summon relationship;
+			-- class/spell/name lists from static research are not proof of ownership.
+			if (sourceSerial and sourceFlags
+				and (bitBand(sourceFlags, OBJECT_TYPE_PETS) ~= 0 or bitBand(sourceFlags, OBJECT_TYPE_GUARDIAN) ~= 0)
 				and targetFlags and bitBand(targetFlags, REACTION_FRIENDLY) == 0) then
 				local myGuid = UnitGUID("player")
 				local livePetGuid = UnitGUID("pet")
@@ -675,8 +679,8 @@
 						petInfo = petContainer.GetPetInfo(sourceSerial)
 					end
 					if (petInfo and petInfo.ownerGuid) then
-						coaOwnedPetPull = petInfo.ownerGuid == myGuid
-							or (sourceFlags and bitBand(sourceFlags, AFFILIATION_GROUP) ~= 0)
+						coaOwnedPetPull = (myGuid and petInfo.ownerGuid == myGuid)
+							or (petInfo.ownerGuid and sourceFlags and bitBand(sourceFlags, AFFILIATION_GROUP) ~= 0)
 					end
 				end
 			end
