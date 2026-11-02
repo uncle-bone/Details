@@ -1,10 +1,12 @@
-# Details! CoA v1.1.10 — Plugin container nil-frame crash guard
+# Details! CoA v1.1.11 — Timeline standalone window fix
 
-- Fixes the reported Details/core/plugins.lua nil-frame failure by validating plugin display frames before embedding or refreshing them.
-- Keeps the v1.1.9 Mechanics guardian combat and ownership-cache fixes, and existing Timeline compatibility guards.
-- The reported error is from Details core, not proof that Timeline itself was the crashing module. The fix prevents this specific nil-frame failure; further runtime testing is needed.
+- Fixes /timeline opening the empty transparent Tools/API/Macros/Scripts/Statistics container instead of Timeline.
+- Opens the Timeline plugin's own fully initialized window on the legacy 3.3.5a client and closes that window directly.
+- Stops embedding Timeline in the incompatible modern plugin container.
+- Preserves the previous plugin nil-frame guards and Mechanics guardian ownership/combat changes.
+- GitHub package validation does not replace live client UI testing.
 
-Install all Details* addon folders directly under Interface/AddOns. Preserve WTF/SavedVariables. Timeline remains disabled by default and can be enabled for testing.
+Install all Details* addon folders under Interface/AddOns. Preserve WTF/SavedVariables. Enable the Timeline addon at character selection, then use /timeline.
 
 Maintainer: Uncle Bone — https://github.com/uncle-bone/Details
-Third-party license notices remain unchanged.
+Third-party licenses and attribution remain intact.
