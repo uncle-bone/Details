@@ -1122,7 +1122,7 @@ local function CreatePluginFrames()
 		local class = TimeLine:GetClass(player_name)
 		local spec = TimeLine:GetSpec(player_name)
 
-		if(spec) then
+		if(spec and _detalhes.class_specs_coords and _detalhes.class_specs_coords[spec]) then
 			row.name.color = TimeLine.class_colors[class or "PRIEST"]
 			row.icon.texture =[[Interface\AddOns\Details\images\spec_icons_normal_alpha]]
 			row.icon.texcoord = _detalhes.class_specs_coords[spec]
