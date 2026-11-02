@@ -1857,6 +1857,11 @@
 			(existingPetOwner[2] == sourceSerial or not sourceSerial or sourceSerial == petSerial)) then
 			sourceName, sourceSerial, sourceFlags = existingPetOwner[1], existingPetOwner[2], existingPetOwner[3]
 		end
+		-- Do not ever register a guardian as its own owner. A later real
+		-- SPELL_SUMMON/UNIT_PET event may still supply the missing link.
+		if (sourceSerial == petSerial) then
+			return
+		end
 
         -- CoA: combat-log summons may omit a display name on custom creatures.
         -- Prefer the summon spell's actual name over an unhelpful Unknown label.
