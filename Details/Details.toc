@@ -4,13 +4,13 @@
 ## Notes: CoA combat analysis, encounter history, damage, healing, and pet tracking.
 ## Author: Uncle Bone
 ## X-Maintainer: Uncle Bone
-## X-Website: https://github.com/downingwow/Details
-## X-Contact: https://github.com/downingwow
+## X-Website: https://github.com/uncle-bone/Details
+## X-Contact: https://github.com/uncle-bone
 ## Notes-ruRU: Незаменимый инструмент, чтобы произвести впечатление на цыпочку в вашем рейде.
 ## SavedVariables: _detalhes_global, __details_backup, __details_debug
 ## SavedVariablesPerCharacter: _detalhes_database
 ## OptionalDeps: Ace3, LibSharedMedia-3.0, LibWindow-1.1, LibDBIcon-1.0, NickTag-1.0, LibDataBroker-1.1, LibGraph-2.0
-## Version: CoA-1.1.7-test
+## Version: CoA-1.1.8-test
 ## X-IconTexture: Interface\AddOns\Details\images\minimap
 
 ## X-Curse-Project-ID: 61284
