@@ -338,11 +338,6 @@ function petContainer.GetOwner(petGuid, petName)
 			end
 		end
 	end
-	-- Throttle unresolved custom pet lookups without permanently discarding them.
-	if (petContainer.OwnerRetryAt and petContainer.OwnerRetryAt[petGuid] and GetTime() < petContainer.OwnerRetryAt[petGuid]) then
-		Details222.Profiling.ProfileStop("petContainer.GetOwner")
-		return
-	end
 	--check if this pet is being ignored
 	if (petContainer.IgnoredActors[petGuid]) then
 		Details222.Profiling.ProfileStop("petContainer.GetOwner")
@@ -356,6 +351,11 @@ function petContainer.GetOwner(petGuid, petName)
 		return petInfo.hashName, petInfo.ownerName, petInfo.ownerGuid, petInfo.ownerFlags
 	end
 
+	-- Throttle unresolved custom pet lookups without permanently discarding them.
+	if (petContainer.OwnerRetryAt and petContainer.OwnerRetryAt[petGuid] and GetTime() < petContainer.OwnerRetryAt[petGuid]) then
+		Details222.Profiling.ProfileStop("petContainer.GetOwner")
+		return
+	end
 	--attempt to find the pet owner by searching the party, raid or the player pet
 	--pet scan already adds the pet into the cache
 	petContainer.PetScan("GetOwner")
