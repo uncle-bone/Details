@@ -355,9 +355,9 @@ local function CreatePluginFrames()
 
 		TimeLine:ScheduleTimer("DelaySegmentRefresh", 1)
 
-		--> show
---		TimeLineFrame:Show()
-		DetailsPluginContainerWindow.OpenPlugin(TimeLine)
+		--> CoA 3.3.5a: display the actual Timeline frame, not the empty Tools sidebar.
+		TimeLineFrame:SetParent(UIParent)
+		TimeLineFrame:Show()
 
 		--> hide cooltip
 		GameCooltip2:Hide()
@@ -366,8 +366,7 @@ local function CreatePluginFrames()
 	end
 
 	function TimeLine:CloseWindow()
---		TimeLineFrame:Hide()
-		DetailsPluginContainerWindow.ClosePlugin()
+		TimeLineFrame:Hide()
 		TimeLine.open = false
 		return true
 	end
@@ -1728,9 +1727,7 @@ function TimeLine:OnEvent(_, event, ...)
 				TimeLine:UpdateShowSpellIconState()
 
 				--> embed the plugin into the plugin window
-				if DetailsPluginContainerWindow then
-					DetailsPluginContainerWindow.EmbedPlugin(TimeLine, TimeLine.Frame)
-				end
+				-- Timeline uses its own frame on the legacy client; no Tools embed.
 			end
 		end
 	end
