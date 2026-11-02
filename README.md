@@ -1,23 +1,29 @@
-# Details! CoA v1.1.7 — Specialization and tooltip fixes
+# Details! CoA v1.1.11 — Tinker Mechanics and Timeline fixes
 
-> **[⬇ Download v1.1.7](https://github.com/uncle-bone/Details/releases/download/v1.1.7/Details-v1.1.7.zip)**
+> **[⬇ Download the latest stable release — v1.1.11](https://github.com/uncle-bone/Details/releases/download/v1.1.11/Details-v1.1.11.zip)**  
+> [GitHub release and changelog](https://github.com/uncle-bone/Details/releases/tag/v1.1.11)
 
+Details! CoA is a modified Details! combat meter for **Ascension Conquest Reborn**, targeting **World of Warcraft 3.3.5a (Lua 5.1)**.
 
-Updates since v1.1.0:
+## What's included in v1.1.11
 
-- Adds class-scoped specialization mapping for 21 custom classes and 70 specialization records, with talent-tree aliases for older internal names.
-- Validates specialization names against the actor's class and resolves global ChrSpecs IDs exactly instead of treating class-local tab positions as global IDs.
-- Removes the unreliable local-player numeric fallback that could identify Wildwalker as Grovekeeper. If the client supplies no usable name or talent data, the tooltip shows Unknown instead of guessing.
-- Displays class and specialization as text in actor tooltips.
-- Reads equipped item levels directly, retains legitimate zero/one heirloom levels, and waits for complete item data rather than counting uncached links as zero.
-- Retains pet-only segment starts, first-hit pet-owner resolution, Primalist attribution, persistent combat history and the existing multi-folder addon package.
+- **Tinker Mechanics:** recognizes owned guardian-type summons as well as ordinary pets when determining first-hit combat starts; preserves existing Demolition fixes.
+- **Summon attribution:** retries unresolved ownership lookups without permanently ignoring summons, and clears stale retry state when ownership resolves or encounters reset.
+- **Timeline:** `/timeline` now opens its standalone Timeline frame instead of the transparent Tools/API/Macros/Scripts panel. Includes nil-frame, aura-event, custom-class icon and saved-profile safeguards.
+- **Class/spec tooltips:** retains custom class-scoped specialization mapping, equipment-level handling and combat history fixes from earlier versions.
+- **Compatibility:** 13 Details* addon folders packaged together; existing saved preferences are not intentionally reset.
 
-Install all Details* folders side by side in Interface/AddOns. Enable the main Details addon in the AddOns menu if needed. Keep and back up WTF/SavedVariables.
+## Installation and testing
 
-Published on the requested stable release channel. The supplied build still carries test labels and has not been fully validated in the live Conquest Reborn client. Historical mappings are not proof of every current specialization ID.
+1. Download the ZIP above and extract **all Details* folders** directly into `World of Warcraft/Interface/AddOns/`.
+2. Enable **Details! Damage Meter** at the character-selection AddOns screen.
+3. To use Timeline, also enable **Details!: Time Line (plugin)**, restart the client and type `/timeline`.
+4. Preserve and back up `WTF/SavedVariables` when updating.
 
-Maintainer: Uncle Bone — https://github.com/uncle-bone
-Original licenses and attribution are retained.
+**Testing note:** GitHub packaging passed. Mechanics summon behavior and Timeline stability have not yet been exhaustively verified in the live Conquest Reborn client. Report any errors with the complete `/crerrors copy` traceback.
+
+Maintainer: **Uncle Bone** — https://github.com/uncle-bone  
+Original Details! and third-party license notices are retained.
 
 ## Earlier combat changes
 
