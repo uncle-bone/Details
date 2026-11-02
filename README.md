@@ -1,11 +1,14 @@
-# Details! CoA v1.1.11 — Tinker Mechanics and Timeline fixes
+# Details! CoA v1.1.12 — Tinker Mechanics and Timeline fixes
 
-> **[⬇ Download the latest stable release — v1.1.11](https://github.com/uncle-bone/Details/releases/download/v1.1.11/Details-v1.1.11.zip)**  
-> [GitHub release and changelog](https://github.com/uncle-bone/Details/releases/tag/v1.1.11)
+> **[⬇ Download the latest stable release — v1.1.12](https://github.com/uncle-bone/Details/releases/download/v1.1.12/Details-v1.1.12.zip)**  
+> [GitHub release and changelog](https://github.com/uncle-bone/Details/releases/tag/v1.1.12)
 
 Details! CoA is a modified Details! combat meter for **Ascension Conquest Reborn**, targeting **World of Warcraft 3.3.5a (Lua 5.1)**.
 
-## What's included in v1.1.11
+## What's included in v1.1.12
+
+- **CoA-Research v2.0.1:** evidence-safe integration of summon-owner chaining; no speculative historical NPC/spell aliases imported into runtime attribution.
+- **Summon reliability:** prevents self-owner loops and preserves confirmed owners when duplicate or incomplete summon events arrive.
 
 - **Tinker Mechanics:** recognizes owned guardian-type summons as well as ordinary pets when determining first-hit combat starts; preserves existing Demolition fixes.
 - **Summon attribution:** retries unresolved ownership lookups without permanently ignoring summons, and clears stale retry state when ownership resolves or encounters reset.
