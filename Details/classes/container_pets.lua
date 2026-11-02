@@ -171,6 +171,19 @@ function petContainer.AddPet(petGuid, petName, petFlags, ownerGuid, ownerName, o
         Details222.Profiling.ProfileStop("petContainer.AddPet")
         return
     end
+    -- Observed summon events may arrive repeatedly with partial owner fields.
+    -- Never turn a confirmed owner into an unowned/self-owned creature.
+    local knownPet = petContainer.Pets and petContainer.Pets[petGuid]
+    if (knownPet and knownPet.ownerGuid and
+        (not ownerGuid or ownerGuid == "" or ownerGuid == petGuid)) then
+        ownerGuid = knownPet.ownerGuid
+        ownerName = knownPet.ownerName
+        ownerFlags = knownPet.ownerFlags
+    end
+    if (ownerGuid and ownerGuid == petGuid) then
+        Details222.Profiling.ProfileStop("petContainer.AddPet")
+        return
+    end
     if (not petName or petName == "" or petName == "Unknown" or petName == "unknown") then
         local existing = petContainer.Pets and petContainer.Pets[petGuid]
         petName = existing and existing.petName
