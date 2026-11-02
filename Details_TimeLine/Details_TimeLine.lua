@@ -1123,7 +1123,7 @@ local function CreatePluginFrames()
 		local spec = TimeLine:GetSpec(player_name)
 
 		if(spec and _detalhes.class_specs_coords and _detalhes.class_specs_coords[spec]) then
-			row.name.color = TimeLine.class_colors[class or "PRIEST"]
+			row.name.color = (TimeLine.class_colors and TimeLine.class_colors[class or "PRIEST"]) or "white"
 			row.icon.texture =[[Interface\AddOns\Details\images\spec_icons_normal_alpha]]
 			row.icon.texcoord = _detalhes.class_specs_coords[spec]
 
@@ -1146,9 +1146,9 @@ local function CreatePluginFrames()
 					row.icon.texture = nil
 				end
 			else
-				row.name.color = TimeLine.class_colors[class]
+				row.name.color = (TimeLine.class_colors and TimeLine.class_colors[class]) or "white"
 				row.icon.texture = class_icons_with_alpha
-				row.icon.texcoord = TimeLine.class_coords[class]
+				row.icon.texcoord = (TimeLine.class_coords and TimeLine.class_coords[class]) or {0, 1, 0, 1}
 			end
 
 		else
@@ -1493,11 +1493,11 @@ function TimeLine:EnemySpellCast(time, token, sourceGUID, sourceName, sourceFlag
 end
 
 function TimeLine:AuraOn(time, _, who_serial, who_name, who_flags, target_serial, target_name, target_flags, spellid, spellname, spelltype, auratype, amount)
-	if auratype == "DEBUFF" then
+	if auratype == "DEBUFF" and target_flags and who_flags and target_name and spellid then
 		--> is the target a player?
 		if _bit_band(target_flags, 0x00000400) ~= 0 then
 			--> is the source an enemy?
-			if not _bit_band(who_flags, 0x00000010) == 0 or (not who_serial or not who_name) then
+			if _bit_band(who_flags, 0x00000010) ~= 0 or (not who_serial or not who_name) then
 				local player_table = TimeLine.debuff_temp_table[target_name]
 				if not player_table then
 					player_table = {}
@@ -1681,6 +1681,17 @@ function TimeLine:OnEvent(_, event, ...)
 					end
 				end
 
+				-- Existing profiles may lack fields added in newer Timeline versions.
+				-- Fill only missing values; preserve every saved user preference.
+				if db.hide_on_combat == nil then db.hide_on_combat = false end
+				if db.useicons == nil then db.useicons = true end
+				if type(db.max_segments) ~= "number" then db.max_segments = 4 end
+				if type(db.backdrop_color) ~= "table" then db.backdrop_color = {0, 0, 0, .4} end
+				if type(db.window_scale) ~= "number" then db.window_scale = 1 end
+				db.cooldowns_timeline = type(db.cooldowns_timeline) == "table" and db.cooldowns_timeline or {}
+				db.debuff_timeline = type(db.debuff_timeline) == "table" and db.debuff_timeline or {}
+				db.combat_data = type(db.combat_data) == "table" and db.combat_data or {}
+				db.deaths_data = type(db.deaths_data) == "table" and db.deaths_data or {}
 				TimeLine.db = db
 				TimeLine.saveddata = db
 
