@@ -1,6 +1,6 @@
 {
   "version": "v1.1.11",
-  "prerelease": true,
+  "prerelease": false,
   "folders": [
     "Details",
     "Details_3DModelsPaths",
