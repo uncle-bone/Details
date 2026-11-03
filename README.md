@@ -1,9 +1,9 @@
 # Details! CoA v1.1.12 — Tinker Mechanics and Timeline fixes
 
-> **[Download](https://github.com/uncle-bone/Details/releases/latest)**
+> **[Download Here!](https://coa-research.unclebone.workers.dev/download/Details)**
 > [GitHub release and changelog](https://github.com/uncle-bone/Details/releases/tag/v1.1.12)
 
-Details! CoA is a modified Details! combat meter for **Ascension Conquest Reborn**, targeting **World of Warcraft 3.3.5a (Lua 5.1)**. **Current stable release: v1.1.12.** This build improves evidence-safe summon ownership and preserves the Mechanics and standalone Timeline fixes; live-client testing is still pending.
+Details! CoA is a modified Details! combat meter for **Ascension Conquest Reborn**, targeting **World of Warcraft 3.3.5a (Lua 5.1)**. ****Current stable release: v1.1.12.** This build improves evidence-safe summon ownership and preserves the Mechanics and standalone Timeline fixes; live-client testing is still pending.
 
 ## What's included in v1.1.12
 
